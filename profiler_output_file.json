@@ -1,0 +1,12 @@
+{"displayTimeUnit":"ms","traceEvents":[{},{"name":"void foo()","ph":"X", "pid":0,"tid":15729502191765196471,"ts":118.45,"dur":1.00035e+06}
+,{"name":"Sending something","ph":"i", "pid":0,"tid":15729502191765196471,"ts":1.00051e+06,"s":"g"}
+,{"name":"in_main","ph":"X", "pid":0,"tid":15729502191765196471,"ts":118.282,"dur":1.50822e+06}
+,{"name":"Processing something","ph":"i", "pid":0,"tid":15729502191765196471,"ts":1.61224e+06,"s":"g"}
+,{"name":"void bar()","ph":"X", "pid":0,"tid":15729502191765196471,"ts":1.50835e+06,"dur":606733}
+,{"name":"Processing something","ph":"i", "pid":0,"tid":15729502191765196471,"ts":2.21544e+06,"s":"g"}
+,{"name":"void bar()","ph":"X", "pid":0,"tid":15729502191765196471,"ts":2.1151e+06,"dur":602013}
+,{"name":"Receiving something","ph":"i", "pid":0,"tid":15729502191765196471,"ts":2.71713e+06,"s":"g"}
+,{"name":"Processing something","ph":"i", "pid":0,"tid":15729502191765196471,"ts":3.32545e+06,"s":"g"}
+,{"name":"void bar()","ph":"X", "pid":0,"tid":15729502191765196471,"ts":3.22005e+06,"dur":610320}
+,{"name":"int main()","ph":"X", "pid":0,"tid":15729502191765196471,"ts":118.082,"dur":3.83035e+06}
+]}
