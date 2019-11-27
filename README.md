@@ -40,6 +40,8 @@ int main() {
 }
 ```
 
+You can then open "profiler_output_file.json" in chrome://tracing.
+
 ## Print everything
 
 ```cpp
