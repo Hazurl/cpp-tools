@@ -35,3 +35,5 @@
 
 build/
 */build/
+
+profiler_output_file.json
