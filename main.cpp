@@ -19,8 +19,8 @@
 
 // Remember to define those before including the profiler header
 
-#include "profiler.hpp"
-#include "dgb.hpp"
+#include <cpp-tools/dbg.hpp>
+#include <cpp-tools/profiler.hpp>
 
 using namespace std::chrono_literals;
 

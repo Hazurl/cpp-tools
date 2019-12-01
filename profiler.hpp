@@ -63,6 +63,11 @@ struct ScopedWatch : Watch {
         callback(get_duration_from_start<Precision>());
     } 
 
+    template<typename P>
+    ScopedWatch<F, P> change_precision() && {
+        return ScopedWatch<F, P>(std::move(callback));
+    }
+
     F callback;
 
 };
@@ -70,6 +75,10 @@ struct ScopedWatch : Watch {
 template<typename F>
 ScopedWatch(F&&) -> ScopedWatch<F>;
 
+template<typename P, typename F>
+ScopedWatch<F, P> scoped_watch_of_precision(F&& f) {
+    return { std::forward<F>(f) };
+}
 
 
 
@@ -201,28 +210,38 @@ struct FileCollector {
     std::ofstream file;
 };
 
+#ifndef NDEBUG
 
+    #ifndef PRF_NO_GLOBAL_COLLECTOR
+        #ifndef PRF_OUTPUT_FILE
+            #define PRF_OUTPUT_FILE "profiler_output_file.json"
+        #endif
 
-#ifndef PRF_NO_GLOBAL_COLLECTOR
-    #ifndef PRF_OUTPUT_FILE
-        #define PRF_OUTPUT_FILE "profiler_output_file.json"
+    inline prf::FileCollector collector(PRF_OUTPUT_FILE);
+
     #endif
 
-inline prf::FileCollector collector(PRF_OUTPUT_FILE);
+    #define PROFILE_SCOPE_TO(name, collector) auto _profiler ## _ ## __LINE__ = ::prf::start_profiling(collector, name)
+    #define PROFILE_SCOPE(name) PROFILE_SCOPE_TO(name, ::prf::collector)
+
+    #define PROFILE_FUNCTION_TO(collector) PROFILE_SCOPE_TO(__PRETTY_FUNCTION__, collector)
+    #define PROFILE_FUNCTION() PROFILE_FUNCTION_TO(::prf::collector)
+
+    #define EMIT_EVENT_TO(msg, collector) ::prf::emit_instant_event(collector, msg)
+    #define EMIT_EVENT(msg) EMIT_EVENT_TO(msg, ::prf::collector)
+
+#else
+
+    #define PROFILE_SCOPE_TO(name, collector)
+    #define PROFILE_SCOPE(name)
+
+    #define PROFILE_FUNCTION_TO(collector)
+    #define PROFILE_FUNCTION() 
+
+    #define EMIT_EVENT_TO(msg, collector) 
+    #define EMIT_EVENT(msg)
 
 #endif
-
-#define PROFILE_SCOPE_TO(name, collector) auto _profiler ## _ ## __LINE__ = ::prf::start_profiling(collector, name)
-#define PROFILE_SCOPE(name) PROFILE_SCOPE_TO(name, ::prf::collector)
-
-#define PROFILE_FUNCTION_TO(collector) PROFILE_SCOPE_TO(__PRETTY_FUNCTION__, collector)
-#define PROFILE_FUNCTION() PROFILE_FUNCTION_TO(::prf::collector)
-
-#define EMIT_EVENT_TO(msg, collector) ::prf::emit_instant_event(collector, msg)
-#define EMIT_EVENT(msg) EMIT_EVENT_TO(msg, ::prf::collector)
-
-
-
 
 
 }
