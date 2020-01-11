@@ -3,10 +3,19 @@
 #include <iostream>
 #include <tuple>
 #include <variant>
+#include <type_traits>
 
-#define DBG_TO(...) ::dbg::print(__VA_ARGS__)
-#define DBG(...) DBG_TO(std::cout, __VA_ARGS__)
+#ifndef NDEBUG
 
+    #define DBG_TO(...) ::dbg::print(__VA_ARGS__)
+    #define DBG(...) DBG_TO(std::cout, __VA_ARGS__)
+
+#else
+
+    #define DBG_TO(os, ...) os
+    #define DBG(...) 
+
+#endif
 namespace dbg {
 
 
